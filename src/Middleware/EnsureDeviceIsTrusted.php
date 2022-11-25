@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Jenssegers\Agent\Facades\Agent;
 use Illuminate\Http\RedirectResponse;
+use Makkinga\TrustedDevices\Facades\TrustedDevices;
 use Makkinga\TrustedDevices\Notifications\DeviceNotTrusted;
 
 class EnsureDeviceIsTrusted
@@ -21,7 +22,7 @@ class EnsureDeviceIsTrusted
      */
     public function handle(Request $request, Closure $next)
     {
-        if (! $request->user() || $request->routeIs('trusted-devices.not-trusted')) {
+        if (! ($user = auth()->guard(TrustedDevices::getActiveGuard())->user()) || $request->routeIs('trusted-devices.not-trusted')) {
             return $next($request);
         }
 
@@ -34,7 +35,7 @@ class EnsureDeviceIsTrusted
             'user_agent'  => $request->userAgent(),
         ]));
 
-        $device = $request->user()->trustedDevices->where('hash', $hash)->first();
+        $device = $user->trustedDevices->where('hash', $hash)->first();
 
         if ($device) {
             if ($device->trusted) {
@@ -44,7 +45,7 @@ class EnsureDeviceIsTrusted
                 return $next($request);
             }
         } else {
-            $device = $request->user()->trustedDevices()->create([
+            $device = $user->trustedDevices()->create([
                 'id'          => Str::uuid(),
                 'ip'          => $request->ip(),
                 'device'      => Agent::device(),
@@ -62,10 +63,8 @@ class EnsureDeviceIsTrusted
         $device->last_seen = now();
         $device->save();
 
-        $request->user()->notify(new DeviceNotTrusted($device, $verificationToken));
+        $user->notify(new DeviceNotTrusted($device, $verificationToken));
 
         return redirect()->route('trusted-devices.not-trusted');
-
-//        return $next($request);
     }
 }

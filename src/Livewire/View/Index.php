@@ -8,8 +8,8 @@ use Illuminate\Auth\Access\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\Foundation\Application;
+use Makkinga\TrustedDevices\Facades\TrustedDevices;
 use Illuminate\Contracts\Container\BindingResolutionException;
-
 
 class Index extends Component
 {
@@ -22,7 +22,7 @@ class Index extends Component
     public function render()
     {
         return view('trusted-devices::trusted-devices.index', [
-            'trustedDevices' => Auth::user()->trustedDevices,
+            'trustedDevices' => Auth::guard(TrustedDevices::getActiveGuard())->user()->trustedDevices,
         ])->layout(config('trusted-devices.layout'));
     }
 }
