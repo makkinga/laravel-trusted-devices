@@ -1,4 +1,4 @@
-# Add trusted devices to your user models
+![](https://github.com/makkinga/laravel-trusted-devices/blob/main/banner.png?raw=true)
 
 ## Installation
 
