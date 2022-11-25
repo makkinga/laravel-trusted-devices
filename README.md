@@ -45,10 +45,7 @@ TRUSTED_DEVICES_IPINFO_TOKEN="{your_token}"
 
 ## Usage
 
-```php
-$trustedDevices = new Makkinga\TrustedDevices();
-echo $trustedDevices->echoPhrase('Hello, Makkinga!');
-```
+Coming soon
 
 ## Contributing
 
