@@ -1,0 +1,75 @@
+{
+    "name": "makkinga/laravel-trusted-devices",
+    "description": "Add trusted devices to your user models",
+    "version": "0.0.12",
+    "keywords": [
+        "Makkinga",
+        "laravel",
+        "trusted-devices"
+    ],
+    "homepage": "https://github.com/makkinga/laravel-trusted-devices",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Gydo Makkinga",
+            "email": "info@makkinga.online",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": "^8.1",
+        "illuminate/contracts": "^9.0",
+        "jenssegers/agent": "^2.6",
+        "livewire/livewire": "^2.10",
+        "spatie/laravel-package-tools": "^1.13.0"
+    },
+    "require-dev": {
+        "laravel/pint": "^1.0",
+        "nunomaduro/collision": "^6.0",
+        "nunomaduro/larastan": "^2.0.1",
+        "orchestra/testbench": "^7.0",
+        "pestphp/pest": "^1.21",
+        "pestphp/pest-plugin-laravel": "^1.1",
+        "phpstan/extension-installer": "^1.1",
+        "phpstan/phpstan-deprecation-rules": "^1.0",
+        "phpstan/phpstan-phpunit": "^1.0",
+        "phpunit/phpunit": "^9.5"
+    },
+    "autoload": {
+        "psr-4": {
+            "Makkinga\\TrustedDevices\\": "src",
+            "Makkinga\\TrustedDevices\\Database\\Factories\\": "database/factories"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Makkinga\\TrustedDevices\\Tests\\": "tests"
+        }
+    },
+    "scripts": {
+        "post-autoload-dump": "@php ./vendor/bin/testbench package:discover --ansi",
+        "analyse": "vendor/bin/phpstan analyse",
+        "test": "vendor/bin/pest",
+        "test-coverage": "vendor/bin/pest --coverage",
+        "format": "vendor/bin/pint"
+    },
+    "config": {
+        "sort-packages": true,
+        "allow-plugins": {
+            "pestphp/pest-plugin": true,
+            "phpstan/extension-installer": true
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Makkinga\\TrustedDevices\\TrustedDevicesServiceProvider"
+            ],
+            "aliases": {
+                "TrustedDevices": "Makkinga\\TrustedDevices\\Facades\\TrustedDevices"
+            }
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}

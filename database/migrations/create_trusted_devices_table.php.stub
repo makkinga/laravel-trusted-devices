@@ -1,0 +1,27 @@
+<?php
+
+use Illuminate\Support\Facades\Schema;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Migrations\Migration;
+
+return new class extends Migration {
+    public function up()
+    {
+        Schema::create('trusted_devices', function (Blueprint $table) {
+            $table->uuid('id');
+            $table->morphs('user');
+            $table->text('name')->nullable();
+            $table->text('ip')->index();
+            $table->text('device');
+            $table->text('platform');
+            $table->text('browser');
+            $table->text('device_type');
+            $table->text('user_agent');
+            $table->boolean('trusted')->default(false);
+            $table->string('verification_token')->nullable();
+            $table->string('hash');
+            $table->timestamp('last_seen');
+            $table->timestamps();
+        });
+    }
+};
