@@ -1,4 +1,4 @@
-<x-mail::message>
+@component('mail::message')
 # {{ $salutation }} {{ $user->name }}
 
 {{ $bodyTop }}
@@ -7,9 +7,9 @@
 
 {{ $bodyBottom }}
 
-<x-mail::button url="{{ route('trusted-devices.verify', ['device' => $device->id, 'token' => $verificationToken]) }}">
+@component('mail::button', ['url' => route('trusted-devices.verify', ['device' => $device->id, 'token' => $verificationToken])])
 {{ $buttonText }}
-</x-mail::button>
+@endcomponent
 
 {{ $footer }}
-</x-mail::message>
+@endcomponent
