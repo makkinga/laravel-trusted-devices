@@ -56,7 +56,7 @@ Please see [CONTRIBUTING](CONTRIBUTING.md) for details.
 
 ## Credits
 
-- [Gydo Makkinga](https://github.com/Gydo Makkinga)
+- [Gydo Makkinga](https://github.com/makkinga)
 
 ## License
 
