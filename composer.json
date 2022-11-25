@@ -1,7 +1,6 @@
 {
     "name": "makkinga/laravel-trusted-devices",
     "description": "Add trusted devices to your user models",
-    "version": "0.2.0",
     "keywords": [
         "Makkinga",
         "laravel",
