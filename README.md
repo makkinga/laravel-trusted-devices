@@ -45,7 +45,41 @@ TRUSTED_DEVICES_IPINFO_TOKEN="{your_token}"
 
 ## Usage
 
-Coming soon
+Prepare your user model by adding the `HasTrustedDevices` trait and also make sure it is using the `Notifiable` trait:
+
+```php
+use Illuminate\Notifications\Notifiable;
+use Makkinga\TrustedDevices\Traits\HasTrustedDevices;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+
+class User extends Authenticatable
+{
+    use Notifiable, HasTrustedDevices;
+}
+```
+
+Then add the trusted device middleware to your `$routeMiddleware` in `app/Http/Kernel.php`:
+
+```php
+use Makkinga\TrustedDevices\Middleware\EnsureDeviceIsTrusted;
+
+protected $routeMiddleware = [
+    [...]
+    'trusted' => EnsureDeviceIsTrusted::class,
+];
+```
+
+You can now use the "trusted" middleware on your routes and route groups like this:
+
+```php
+Route::middleware(['auth', 'trusted'])->group(function () {
+    // Your routes
+});
+```
+
+```php
+Route::get('/my-route', [MyController::class, 'method'])->name('my-route')->middleware('trusted');
+```
 
 ## Contributing
 
