@@ -32,8 +32,8 @@ class EnsureDeviceIsTrusted
             return $next($request);
         }
 
-        # ..Or the user's modal doesnt use the HasTrustedDevices trait
-        if (in_array('Makkinga\TrustedDevices\Traits\HasTrustedDevices', class_uses($user))) {
+        # ..Or the user's modal doesn't use the HasTrustedDevices trait
+        if (! in_array('Makkinga\TrustedDevices\Traits\HasTrustedDevices', class_uses($user))) {
             return $next($request);
         }
 
@@ -76,7 +76,7 @@ class EnsureDeviceIsTrusted
         # ..Generate a token to verify it..
         $verificationToken          = Str::uuid();
         $device->verification_token = bcrypt($verificationToken);
-        $device->last_seen = now();
+        $device->last_seen          = now();
 
         # ..Save it..
         $device->save();
