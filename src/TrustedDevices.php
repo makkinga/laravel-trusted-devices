@@ -2,6 +2,9 @@
 
 namespace Makkinga\TrustedDevices;
 
+use Illuminate\Support\Str;
+use Jenssegers\Agent\Facades\Agent;
+
 class TrustedDevices
 {
     /**
@@ -18,5 +21,35 @@ class TrustedDevices
         }
 
         return null;
+    }
+
+    /**
+     * Create new trusted device from current device
+     *
+     * @return int|mixed|string|null
+     */
+    static function new($user)
+    {
+        $hash = md5(serialize([
+            'ip'          => request()->ip(),
+            'device'      => Agent::device(),
+            'device_type' => Agent::deviceType(),
+            'platform'    => Agent::platform(),
+            'browser'     => Agent::browser(),
+            'user_agent'  => request()->userAgent(),
+        ]));
+
+        $user->trustedDevices()->create([
+            'id'          => Str::uuid(),
+            'ip'          => request()->ip(),
+            'device'      => Agent::device(),
+            'device_type' => Agent::deviceType(),
+            'platform'    => Agent::platform(),
+            'browser'     => Agent::browser(),
+            'user_agent'  => request()->userAgent(),
+            'trusted'     => true,
+            'last_seen'   => now(),
+            'hash'        => $hash,
+        ]);
     }
 }
