@@ -83,7 +83,7 @@ class EnsureDeviceIsTrusted
         $device->save();
 
         # If not trusted
-        if (! $this->trusted) {
+        if (! $device->trusted) {
             # ..notify the user
             $user->notify(new DeviceNotTrusted($device, $verificationToken));
 
