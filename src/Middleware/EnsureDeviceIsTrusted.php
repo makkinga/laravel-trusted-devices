@@ -37,7 +37,7 @@ class EnsureDeviceIsTrusted
             return $next($request);
         }
 
-        # Creating a has to ensure we're looking for the correct device
+        # Creating a hash to ensure we're looking for the correct device
         $hash = md5(serialize([
             'ip'          => $request->ip(),
             'device'      => Agent::device(),
@@ -68,7 +68,7 @@ class EnsureDeviceIsTrusted
                 'platform'    => Agent::platform(),
                 'browser'     => Agent::browser(),
                 'user_agent'  => $request->userAgent(),
-                'trusted'     => false,
+                'trusted'     => ! $user->trustedDevices->count() && config('trusted-devices.trust_first_device'),
                 'hash'        => $hash,
                 'last_seen'   => now(),
             ]);
