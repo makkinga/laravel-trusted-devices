@@ -82,10 +82,16 @@ class EnsureDeviceIsTrusted
         # ..Save it..
         $device->save();
 
-        # ..And notify the user
-        $user->notify(new DeviceNotTrusted($device, $verificationToken));
+        # If not trusted
+        if (! $this->trusted) {
+            # ..notify the user
+            $user->notify(new DeviceNotTrusted($device, $verificationToken));
 
-        # Sorry sir, but your device is not trusted
-        return redirect()->route('trusted-devices.not-trusted');
+            # Sorry sir, but your device is not trusted
+            return redirect()->route('trusted-devices.not-trusted');
+        }
+
+        # If it is trusted, leave the user in peace
+        return $next($request);
     }
 }
