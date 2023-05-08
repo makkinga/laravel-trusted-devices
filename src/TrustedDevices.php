@@ -14,6 +14,10 @@ class TrustedDevices
      */
     static function getActiveGuard()
     {
+        if (config('trusted-devices.guard')) {
+            return config('trusted-devices.guard');
+        }
+
         foreach (array_keys(config('auth.guards')) as $guard) {
             if (auth()->guard($guard)->check()) {
                 return $guard;

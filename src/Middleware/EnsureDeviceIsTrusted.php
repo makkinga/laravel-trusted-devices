@@ -70,6 +70,7 @@ class EnsureDeviceIsTrusted
                 'user_agent'  => $request->userAgent(),
                 'trusted'     => false,
                 'hash'        => $hash,
+                'last_seen'   => now(),
             ]);
         }
 
