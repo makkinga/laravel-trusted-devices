@@ -32,7 +32,7 @@ class EnsureDeviceIsTrusted
             return $next($request);
         }
 
-        # ..Or the user's modal doesn't use the HasTrustedDevices trait
+        # ..Or the user's model doesn't use the HasTrustedDevices trait
         if (! in_array('Makkinga\TrustedDevices\Traits\HasTrustedDevices', class_uses($user))) {
             return $next($request);
         }
